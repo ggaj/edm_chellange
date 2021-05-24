@@ -1,0 +1,9 @@
+<button
+  type="submit"
+  class="btn btn-primary col-sm-12 col-md-2"
+  [disabled]="disabled">
+    <div *ngIf="loading" class="spinner-grow spinner-grow-sm" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div *ngIf="!loading">{{ display }}</div>
+</button>

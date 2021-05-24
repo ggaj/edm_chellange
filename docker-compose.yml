@@ -1,0 +1,44 @@
+# Use root/example as user/password credentials
+version: "3.1"
+
+networks:
+  edm-networks:
+    driver: bridge
+
+services:
+  db:
+    container_name: edm-db
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example@123
+    ports:
+      - 3306:3306
+    expose:
+      - "3306"
+    networks:
+      - edm-networks
+
+  api:
+    container_name: edm-api
+    build: ./edm-back/
+    restart: always
+    ports:
+      - "5050:5050"
+      - "9222:9222"
+    depends_on:
+      - db
+    networks:
+      - edm-networks
+
+  web:
+    container_name: edm-web
+    build: ./edm-front/
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+    networks:
+      - edm-networks

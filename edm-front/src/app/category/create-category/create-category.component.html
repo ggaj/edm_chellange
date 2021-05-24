@@ -1,0 +1,32 @@
+<section>
+  <div class="header">
+    <h2>Category register</h2>
+    <button type="button" class="btn btn-secondary" [routerLink]="['/categories']">Back</button>
+  </div>
+
+  <form [formGroup]="categoryForm" >
+    <div class="form-group">
+      <label for="name">Category name</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="name"
+        id="name"
+        autocomplete="off"
+        maxlength="128">
+
+      <app-alert-error
+        [visible]="categoryForm.get('name')?.errors?.required && categoryForm.get('name')?.touched"
+        message="Category name is required">
+      </app-alert-error>
+    </div>
+
+    <app-btn-save
+      display="Save"
+      [loading]="loading"
+      [disabled]="!categoryForm.valid || loading"
+      >
+    </app-btn-save>
+  </form>
+</section>
+

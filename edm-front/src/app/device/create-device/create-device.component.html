@@ -1,0 +1,81 @@
+<section>
+  <div class="header">
+    <h2>Device register</h2>
+    <button type="button" class="btn btn-secondary" [routerLink]="['/devices']">Back</button>
+  </div>
+
+  <form [formGroup]="deviceForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label for="category">Select category</label>
+      <select class="custom-select" formControlName="categoryId">
+        <option *ngFor="let category of categories | async" [value]="category.id">
+          {{category.name}}
+        </option>
+      </select>
+      <div *ngIf="deviceForm.get('categoryId')?.touched">
+        <app-alert-error
+          [visible]="deviceForm.get('categoryId')?.errors?.required"
+          message="Category is required">
+        </app-alert-error>
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="form-group col-sm-6">
+        <label for="color">Color</label>
+        <input
+          type="text"
+          class="form-control"
+          autocomplete="off"
+          formControlName="color"
+          maxlength="16"
+        >
+        <div *ngIf="deviceForm.get('color')?.touched">
+          <app-alert-error
+            [visible]="deviceForm.get('color')?.errors?.required"
+            message="Color is required">
+          </app-alert-error>
+          <app-alert-error
+            [visible]="deviceForm.get('color')?.errors?.maxLength"
+            message="Character limit exceeded - 16">
+          </app-alert-error>
+          <app-alert-error
+            [visible]="deviceForm.get('color')?.errors?.pattern"
+            message="Only letters - [a-zA-Z]">
+          </app-alert-error>
+        </div>
+      </div>
+
+      <div class="form-group col-sm-6">
+        <label for="partNumber">Part Number</label>
+        <input
+          type="number"
+          class="form-control"
+          formControlName="partNumber">
+
+        <div *ngIf="deviceForm.get('partNumber')?.touched">
+          <app-alert-error
+            [visible]="deviceForm.get('partNumber')?.errors?.required"
+            message="Part number is required">
+          </app-alert-error>
+          <app-alert-error
+            [visible]="deviceForm.get('partNumber')?.errors?.min"
+            message="Part number must more the than zero">
+          </app-alert-error>
+        </div>
+      </div>
+
+    </div>
+
+    <app-btn-save
+      display="Save"
+      [loading]="loading"
+      [disabled]="!deviceForm.valid || loading"
+    >
+    </app-btn-save>
+
+  </form>
+</section>
+
