@@ -50,3 +50,9 @@ $ docker-compose up --build
 ```
 
 **IMPORTANT**: Once configured, it is necessary to manually create the database schema, with name **edm**
+
+## How to test
+
+```
+$ cd edm-back && npm run test
+```
