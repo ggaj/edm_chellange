@@ -13,7 +13,6 @@ export class CreateCategoryController implements IController {
 
   async handle (request: CreateCategoryController.Request): Promise<HttpResponse> {
     try {
-      
       const error = await this.validationSchema.validate(categorySchema, request)
       if (error) {
         return missingFields(error)

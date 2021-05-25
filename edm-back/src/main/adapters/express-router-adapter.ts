@@ -4,12 +4,11 @@ import { IController, HttpRequest } from '../../shared/presentation/interfaces'
 
 export const adaptRoute = (controller: IController) => {
   return async (req: Request, res: Response) => {
-    const httpRequest: HttpRequest = {
-      body: req.body,
-      params: req.params,
-      query: req.query,
+    const request = {
+      ...(req.body || {}),
+      ...(req.params || {})
     }
-    const httpResponse = await controller.handle(httpRequest)
+    const httpResponse = await controller.handle(request)
     if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
       res.status(httpResponse.statusCode).json(httpResponse.body)
     } else {

@@ -9,9 +9,9 @@ export class DeleteCategoryController implements IController {
     private readonly deleteCategoryUseCase: IDeleteCategoryUseCase
   ) { }
 
-  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
+  async handle (request: HttpRequest): Promise<HttpResponse> {
     try {
-      const { id } = httpRequest.params
+      const { id } = request
       const categoryExists = await this.getCategoryUseCase.show(id)
       
       if (!categoryExists)

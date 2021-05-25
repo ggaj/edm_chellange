@@ -8,9 +8,9 @@ export class GetDeviceController implements IController {
     private readonly getDeviceUseCase: IGetDeviceUseCase
   ) { }
 
-  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
+  async handle (request: HttpRequest): Promise<HttpResponse> {
     try {
-      const { id } = httpRequest.params
+      const { id } = request
       const device = await this.getDeviceUseCase.show(id)
       
       if (!device)

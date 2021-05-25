@@ -9,7 +9,6 @@ export class ListDeviceRepository implements IListDeviceRepository {
     const devices = await ormRepository.find({
       relations: ['category']
     })
-    console.table(devices);
     return devices
   }
 }

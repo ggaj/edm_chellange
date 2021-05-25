@@ -1,8 +1,8 @@
 import { IController } from '@/shared/presentation/interfaces/controller'
 import { badRequest, missingFields, ok } from '@/shared/presentation/helpers'
 import { IValidationSchema } from '@/shared/presentation/interfaces'
-import { HttpRequest, HttpResponse } from '@/shared/presentation/interfaces/http'
-import {  deviceSchema } from '../schema/device-schema'
+import { HttpResponse } from '@/shared/presentation/interfaces/http'
+import { deviceSchema } from '../schema/device-schema'
 import { ICreateDeviceUseCase } from '../../domain/use-case'
 
 export class CreateDeviceController implements IController {
@@ -11,14 +11,15 @@ export class CreateDeviceController implements IController {
     private readonly createDeviceUseCase: ICreateDeviceUseCase
   ) { }
 
-  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
+  async handle (request: CreateDeviceController.Request): Promise<HttpResponse> {
     try {
-      const error = await this.validationSchema.validate(deviceSchema, httpRequest.body)
+      console.log(request)
+      const error = await this.validationSchema.validate(deviceSchema, request)
       if (error) {
         return missingFields(error)
       }
 
-      const { categoryId, color, partNumber } = httpRequest.body;
+      const { categoryId, color, partNumber } = request;
 
       const category = await this.createDeviceUseCase.create({categoryId, color, partNumber})
 
@@ -26,5 +27,13 @@ export class CreateDeviceController implements IController {
     } catch (error) {
       return badRequest(error)
     }
+  }
+}
+
+export namespace CreateDeviceController {
+  export type Request = {
+    categoryId: number,
+    color: string,
+    partNumber: number
   }
 }

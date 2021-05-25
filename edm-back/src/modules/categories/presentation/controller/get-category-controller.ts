@@ -8,9 +8,9 @@ export class GetCategoryController implements IController {
     private readonly getCategoryUseCase: IGetCategoryUseCase
   ) { }
 
-  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
+  async handle (request: HttpRequest): Promise<HttpResponse> {
     try {
-      const { id } = httpRequest.params
+      const { id } = request
       const category = await this.getCategoryUseCase.show(id)
       
       if (!category)

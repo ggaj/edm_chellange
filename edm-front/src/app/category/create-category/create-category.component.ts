@@ -24,23 +24,24 @@ export class CreateCategoryComponent implements OnInit {
   ngOnInit() {
     this.loading = false;
     this.categoryForm = this.formBuilder.group({
-      name: [null, [ Validators.required, Validators.maxLength(1), Validators.email ]]
+      name: [null, [ Validators.required, Validators.maxLength(128) ]]
     })
   }
 
   onSubmit(){
-
     this.loading = true;
 
     const category = this.categoryForm.getRawValue() as Category;
-
     this.service.create(category.name).subscribe(
       (_) => {
         this.categoryForm.reset()
         this.router.navigateByUrl('categories')
       },
       //TODO: update screen with data backend
-      (error: any) => console.error(error),
+      (error: any) => {
+        console.error(error);
+        this.loading = false;
+      },
       () => this.loading = false
     )
   }

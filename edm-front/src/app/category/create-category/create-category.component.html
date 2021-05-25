@@ -4,7 +4,7 @@
     <button type="button" class="btn btn-secondary" [routerLink]="['/categories']">Back</button>
   </div>
 
-  <form [formGroup]="categoryForm" >
+  <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="name">Category name</label>
       <input

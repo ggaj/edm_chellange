@@ -9,9 +9,9 @@ export class DeleteDeviceController implements IController {
     private readonly deleteDeviceUseCase: IDeleteDeviceUseCase
   ) { }
 
-  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
+  async handle (request: HttpRequest): Promise<HttpResponse> {
     try {
-      const { id } = httpRequest.params
+      const { id } = request
       const deviceExists = await this.getDeviceUseCase.show(id)
       
       if (!deviceExists)
